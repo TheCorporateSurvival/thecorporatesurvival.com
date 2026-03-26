@@ -59,13 +59,36 @@
             pointer-events: none;
         }
 
-        /* Logo image */
+        /* Logo icon */
         .logo-mark {
-            width: 220px;
+            width: 120px;
             height: auto;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
             filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.2));
             animation: float 6s ease-in-out infinite;
+        }
+
+        /* Brand name in Cinzel */
+        .brand-name {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.2rem;
+            font-variant: small-caps;
+        }
+
+        .brand-sub {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 2.5rem;
+            font-variant: small-caps;
         }
 
         @keyframes float {
@@ -160,7 +183,7 @@
         @media (max-width: 480px) {
             body { padding: 1.5rem; }
             body::before { margin: 0.8rem; border-radius: 16px; }
-            .logo-mark { width: 160px; margin-bottom: 1.5rem; }
+            .logo-mark { width: 90px; margin-bottom: 1rem; }
             .tagline { margin-bottom: 2.5rem; }
             .coming-soon { margin-bottom: 2rem; }
         }
@@ -170,6 +193,8 @@
 
 <!-- Logo -->
 <img class="logo-mark" src="logo.png" alt="The Corporate Survival">
+<div class="brand-name">Corporate</div>
+<div class="brand-sub">Survival</div>
 
 <p class="tagline">
     <em>Navigate. Survive. Thrive.</em><br>
