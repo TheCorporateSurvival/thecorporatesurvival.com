@@ -461,6 +461,9 @@ function toggleForm() {
     var btn = document.getElementById('contact-toggle');
     body.classList.toggle('open');
     btn.classList.toggle('open');
+    if (body.classList.contains('open')) {
+        gtag('event', 'contact_form_open', { event_category: 'engagement' });
+    }
 }
 
 // Form submission via Formspree with AJAX
@@ -488,6 +491,7 @@ form.addEventListener('submit', function(e) {
             form.style.display = 'none';
             success.style.display = 'block';
             form.reset();
+            gtag('event', 'contact_form_submit', { event_category: 'engagement' });
         } else {
             alert('Something went wrong. Please try again.');
         }
