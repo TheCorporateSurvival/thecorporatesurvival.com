@@ -54,8 +54,8 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- hCaptcha (Web3Forms built-in) -->
+    <script src="https://web3forms.com/client/script.js" async defer></script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -429,21 +429,26 @@
         <span class="arrow">&#9660;</span>
     </button>
     <div class="contact-body" id="contact-body">
-    <form class="contact-form" id="contact-form" action="https://formspree.io/f/xvzvgrbb" method="POST">
+    <form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+        <!-- Web3Forms Access Key -->
+        <input type="hidden" name="access_key" value="53ed1862-29a5-4340-b91a-203cf1f2b105">
+        <input type="hidden" name="subject" content="New message from thecorporatesurvival.com">
+        <input type="hidden" name="from_name" content="The Corporate Survival">
+
         <div class="form-row">
             <input type="text" name="name" placeholder="Name" required minlength="2">
             <input type="email" name="email" placeholder="Email" required>
         </div>
         <textarea name="message" placeholder="Your message (at least 20 characters)..." rows="3" required minlength="20"></textarea>
 
-        <!-- Honeypot field — invisible to humans, catches bots -->
+        <!-- Honeypot field — invisible to humans, catches bots (Web3Forms also supports this) -->
         <div class="hp-field" aria-hidden="true">
-            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+            <input type="text" name="botcheck" tabindex="-1" autocomplete="off">
         </div>
 
-        <!-- reCAPTCHA v2 — replace 6LdhxZksAAAAAK7Z2cIYSnK5HnKCYtyuTTxPH3Nm with your actual key -->
+        <!-- hCaptcha — Web3Forms built-in, no separate account needed -->
         <div class="recaptcha-wrap">
-            <div class="g-recaptcha" data-sitekey="6LdhxZksAAAAAK7Z2cIYSnK5HnKCYtyuTTxPH3Nm" data-theme="dark"></div>
+            <div class="h-captcha" data-captcha="true"></div>
         </div>
 
         <button type="submit">Send Message</button>
@@ -466,19 +471,12 @@ function toggleForm() {
     }
 }
 
-// Form submission via Formspree with AJAX
+// Form submission via Web3Forms with AJAX
 var form = document.getElementById('contact-form');
 var success = document.getElementById('form-success');
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
-
-    // Check reCAPTCHA
-    var response = grecaptcha.getResponse();
-    if (!response) {
-        alert('Please complete the captcha.');
-        return;
-    }
 
     var data = new FormData(form);
 
@@ -487,7 +485,9 @@ form.addEventListener('submit', function(e) {
         body: data,
         headers: { 'Accept': 'application/json' }
     }).then(function(res) {
-        if (res.ok) {
+        return res.json();
+    }).then(function(json) {
+        if (json.success) {
             form.style.display = 'none';
             success.style.display = 'block';
             form.reset();
